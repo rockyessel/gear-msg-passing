@@ -60,6 +60,9 @@ impl TransferRequestTrait for TransferRequest {
                         goods.is_transfer_active = false;
                         request.declined = true;
 
+                        // Record goods to store, after it has been approved.
+                        handle_transfer_articles(request.prog_id, goods);
+
                         // The transfer was successful
                         return GoodsEvents::Transferred(params.goods_id.to_string());
                     }
@@ -114,9 +117,6 @@ impl TransferRequestTrait for TransferRequest {
                         .find(|g| g.goods_id == request.goods_id.into())
                     {
                         goods.is_transfer_active = false;
-
-                        // Record goods to store, after it has been approved.
-                        handle_transfer_articles(request.prog_id, goods);
 
                         // transfer request was declined
                         return GoodsEvents::TransferDeclined(params.goods_id.to_string());
@@ -173,10 +173,9 @@ pub fn goods_state_handler(action: GoodsStateActions) -> GoodsStateEvents {
     }
 }
 
-
 fn handle_transfer_articles(prog_id: ActorId, goods: &Goods) {
     let store_action_msg = StoreGoodsActions::ReceiveGoods(goods.clone());
     msg::send(prog_id, store_action_msg.encode(), 0).expect("Failed to send message");
-    // let id = &goods.goods_id;
-    // msg::reply(StoreGoodsEvents::ReceivedGoods(id.clone()), 0).expect("Error in sending reply.");
+    let id = &goods.goods_id;
+    msg::reply(StoreGoodsEvents::ReceivedGoods(id.clone()), 0).expect("Error in sending reply.");
 }
