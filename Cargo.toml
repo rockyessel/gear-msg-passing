@@ -1,0 +1,33 @@
+[workspace]
+resolver = "2"
+members = [ "goods", "store"]
+
+
+[workspace.package]
+name = "symbion"
+version = "0.1.0"
+edition = "2021"
+authors = ["Rocky Essel"]
+license = "MIT"
+publish = false
+
+[workspace.dependencies]
+# Internal Crates
+goods= {path ='goods'}
+store={path = "store"}
+
+
+
+goods-services={path = "goods/services"}
+store-services={path = "store/services"}
+goods-io={path = "goods/io"}
+store-io={path = "store/io"}
+
+# External Crates 194.
+# External Crates 194.1346
+gstd = "1.4.1"
+gmeta = "1.4.1"
+gtest  = "1.4.1"
+gear-wasm-builder = "1.4.1"
+parity-scale-codec = { version = "3.6.12", default-features = false, features = ["derive"] }
+scale-info-derive= { version = "2.11.3", default-features = false }

@@ -1,0 +1,22 @@
+[package]
+name = "goods"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+gstd.workspace = true
+gmeta.workspace = true
+goods-io.workspace = true
+goods-services.workspace = true
+
+[dev-dependencies]
+goods-io.workspace = true
+goods-services.workspace = true
+
+[build-dependencies]
+gear-wasm-builder.workspace = true
+goods-io.workspace = true
+goods-services.workspace = true

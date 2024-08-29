@@ -1,0 +1,19 @@
+[package]
+name = "goods-services"
+version.workspace = true
+edition.workspace = true
+publish.workspace = true
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+# External
+gstd.workspace = true
+gmeta.workspace = true
+parity-scale-codec.workspace=true
+scale-info-derive.workspace=true
+
+
+# Internal
+goods-io.workspace = true
+store-io.workspace = true
