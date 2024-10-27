@@ -61,7 +61,7 @@ impl TransferRequestTrait for TransferRequest {
                         request.declined = true;
 
                         // Record goods to store, after it has been approved.
-                        handle_transfer_articles(request.prog_id, goods);
+                        handle_transfer(request.prog_id, goods);
 
                         // The transfer was successful
                         return GoodsEvents::Transferred(params.goods_id.to_string());
@@ -173,7 +173,7 @@ pub fn goods_state_handler(action: GoodsStateActions) -> GoodsStateEvents {
     }
 }
 
-fn handle_transfer_articles(prog_id: ActorId, goods: &Goods) {
+fn handle_transfer(prog_id: ActorId, goods: &Goods) {
     let store_action_msg = StoreGoodsActions::ReceiveGoods(goods.clone());
     msg::send(prog_id, store_action_msg.encode(), 0).expect("Failed to send message");
     let id = &goods.goods_id;
